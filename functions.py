@@ -1,5 +1,4 @@
 from os import system as syst
-import os
 from time import sleep
 
 
