@@ -17,7 +17,7 @@ class MiniFeed():
         try:
             self.Feed = input("Enter Your Mini Feed : ")
             print("Your MiniFeed posted Successfully!")
-            loading(3,"Returning",2)
+            lazy_loading(3,"Returning",2)
         except Exception as E:
             print("Error Occured!",E)
     def modify_feed(self):
@@ -25,7 +25,7 @@ class MiniFeed():
         try:
             self.Feed = input("Enter Your Mini Feed : ")
             print("Your MiniFeed updated Successfully!")
-            loading(3,"Returning",2)
+            lazy_loading(3,"Returning",2)
         except Exception as E:
             print("Error Occured!",E)
     def liked(self,index):
@@ -49,7 +49,6 @@ class MiniFeed():
 
 
 class Account():
-    Username,Name,Password,Phone,Followers,Following = None,None,None,None,None,None
     def __init__(self,u_name,name,p_word,p_number,flwers,flwing,feed,ind):
         self.index = ind
         self.Username = u_name
@@ -109,6 +108,7 @@ class Account():
         Data = new_acc.to_DataFrame(Data,indx)
         Data = self.to_DataFrame(Data,self.index)
         return Data
+
     def unfollow(self,Data,indx):
         new_acc = Account(Data.iloc[indx]['Username'],Data.iloc[indx]['Name'],Data.iloc[indx]['Password'],
         Data.iloc[indx]['Phone'],Data.iloc[indx]['Followers'],Data.iloc[indx]['Following'],Data.iloc[indx]['Feed'],indx)
@@ -119,12 +119,13 @@ class Account():
         Data = new_acc.to_DataFrame(Data,indx)
         Data = self.to_DataFrame(Data,self.index)
         return Data
+
     def view_followers(self,Data):
         layout()
         try:
             if len(self.Followers) == 0:
                 print("No Followers to show!!")
-                loading(2,"Returning to Home Page",2)
+                lazy_loading(2,"Returning to Home Page",2)
             else:
                 while True:
                     layout()
@@ -139,13 +140,13 @@ class Account():
                     display(Data,self.index,F[choice])
         except Exception as E:
             print("UnExpected Error Occured!!",E)
-            loading(2,"Returning to Home Page",2)
+            lazy_loading(2,"Returning to Home Page",2)
     def view_following(self,Data):
         layout()
         try:
             if len(self.Following) == 0:
                 print("You are not Following anyone!!")
-                loading(2,"Returning to Home Page",2)
+                lazy_loading(2,"Returning to Home Page",2)
             else:
                 while True:
                     layout()
@@ -160,13 +161,14 @@ class Account():
                     display(Data,self.index,F[choice])
         except Exception as E:
             print("UnExpected Error Occured!!",E)
-            loading(2,"Returning to Home Page",2)
+            lazy_loading(2,"Returning to Home Page",2)
+
     def view_mutuals(self,Data,other_ind):
         try:
             if self.index==other_ind:
                 layout()
                 print("You can't have Mutuals with your Own Account!")
-                loading(3,"Returning",1)
+                lazy_loading(3,"Returning",1)
                 return
             while True:
                 layout()
@@ -177,7 +179,7 @@ class Account():
 
                 if len(S)==0:
                     print("You have 0 mutuals to Show!!")
-                    loading(2,"Returning",2)
+                    lazy_loading(2,"Returning",2)
                     return
                 D = dict()
                 for i in range(len(S)):
@@ -190,14 +192,14 @@ class Account():
                 display(Data,self.index,D[choice])
         except Exception as E:
             print("UnExpected Error Occured!",E)
-            loading(2,"Returning",2)
+            lazy_loading(2,"Returning",2)
     def own_Feed(self,Data):
         try:
             while True:
                 layout()
                 if len(self.Feed)==0:
                     print("You have No Feed to show!")
-                    loading(2,"Returning",3)
+                    lazy_loading(2,"Returning",3)
                     break
                 print("Select Feed to View :\n")
                 D = dict()
@@ -212,7 +214,7 @@ class Account():
                 Feed.display(Data,self.index)
         except Exception as E:
             print("Error Occured!",E)
-            loading(2,"Returning",2)
+            lazy_loading(2,"Returning",2)
 
     def add_Feed(self,Data):
         layout()
@@ -220,7 +222,7 @@ class Account():
             new_feed = input("Enter Your Mini Feed : ")
             self.Feed.append(new_feed)
             print("Your MiniFeed posted Successfully!")
-            loading(3,"Returning",2)
+            lazy_loading(3,"Returning",2)
         except Exception as E:
             print("Error Occured!",E)
     def delete_Feed(self,Data):
@@ -229,7 +231,7 @@ class Account():
                 layout()
                 if len(self.Feed)==0:
                     print("You have No Feed to show!")
-                    loading(2,"Returning",3)
+                    lazy_loading(2,"Returning",3)
                     break
                 print("Select Feed to Delete :\n")
                 D = dict()
@@ -243,10 +245,10 @@ class Account():
                 else:
                     self.Feed.remove(D[choice])
                     print("Feed Succesfully Deleted!")
-                    loading(2,"Refreshing",2)
+                    lazy_loading(2,"Refreshing",2)
         except Exception as E:
             print("Error Occured!",E)
-            loading(2,"Returning",3)
+            lazy_loading(2,"Returning",3)
     def settings(self,Data):
         try:
             while True:
@@ -262,7 +264,7 @@ class Account():
                     if choice1[0] == 'y':
                         Data.iloc[self.index,1] = new_name
                         print("Name change successful!!")
-                        loading(3,"Returning",1)
+                        lazy_loading(3,"Returning",1)
                 elif choice == 2:
                     def is_password(passwrd):
                         if len(passwrd) < 8:
@@ -289,33 +291,33 @@ class Account():
                         if choice1[0] == 'y':
                             Data.iloc[self.index]['Password'] = new_pass
                             print("Password changed successful!!")
-                            loading(2,"Returning",2)
+                            lazy_loading(2,"Returning",2)
                             break
                         else:
-                            loading(0,"Returning",3)
+                            lazy_loading(0,"Returning",3)
                             break
                 elif choice == 3:
                     new_num = input("Enter New Phone Number : ")
                     if new_num == str(self.Phone):
                         print("You are account is already linked with this Phone number!!")
-                        loading(3,"Returning",2)
+                        lazy_loading(3,"Returning",2)
                     elif len(new_num) != 10 and not new_num.isdigit():
                         print("Invalid Phone Number!")
-                        loading(2,"Returning",2)
+                        lazy_loading(2,"Returning",2)
                     else:
                         for i in range(len(Data)):
                             if i == Data.iloc[i]['Phone']:
                                 print("Account with {} already exists!".format(new_num))
-                                loading(2,"Returning",3)
+                                lazy_loading(2,"Returning",3)
                                 break
                         else:
                             print("Phone number changed from {} to {}!!".format(self.Phone,new_num))
                             Data.iloc[self.index]['Phone'] = int(new_num)
-                            loading(3,"Returning",2)
+                            lazy_loading(3,"Returning",2)
             return Data
         except Exception as E:
             print("UnExpected Error Occured",E)
-            loading(2,"Returning to profile",2)
+            lazy_loading(2,"Returning to profile",2)
             return Data
 
 
@@ -460,7 +462,7 @@ def display(Data,ind,other_ind):
                 other_acc.view_following(Data)
     except Exception as E:
         print("An Unexpected Error Occured!",E)
-        loading(2,"Returning to Your Profile",3)
+        lazy_loading(2,"Returning to Your Profile",3)
 
 def Login(Data):
     layout()
@@ -471,15 +473,15 @@ def Login(Data):
         for i in range(len(Data)):
             if Data.iloc[i]['Username'] == uname and Data.iloc[i]['Password'] == pword:
                 layout()
-                loading(1,"LOGGING IN TO YOUR ACCOUNT",2)
+                lazy_loading(1,"LOGGING IN TO YOUR ACCOUNT",2)
                 Data = Home(Data,i)
                 break
         else:
             print("Couldn't Find User, Enter correct Username or Password!!")
-            loading(3,"Page redirecting",3)
+            lazy_loading(3,"Page redirecting",3)
     except Exception as E:
         print("Login Failed, Please try again!",E)
-        loading(3,"Page redirecting",3)
+        lazy_loading(3,"Page redirecting",3)
 
 def search(Data,curr_ind):
     try:
@@ -576,7 +578,7 @@ def Home(Data,ind):
             print("Select :\n\n1)Search\n2)Feed\n3)Followers\n4)Following\n5)Settings\n0)Log Out\n\n")
             choice = int(input("Your Choice : "))
             if choice == 0:
-                loading(2,"Loging Out",3)
+                lazy_loading(2,"Loging Out",3)
                 break
             elif choice == 1:
                 search(Data,ind)
@@ -604,7 +606,7 @@ def Home(Data,ind):
         return curr_acc.to_DataFrame(Data,ind)       
     except Exception as E:
         print("An Unexpected Error Occured!!",E)
-        loading(3,"Returning to Home page",3)
+        lazy_loading(3,"Returning to Home page",3)
         return Data
         
 if __name__ == '__main__':

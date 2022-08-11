@@ -1,7 +1,6 @@
 from structure import *
 from functions import *
 
-
 Data = import_data()
 
 try:
@@ -19,7 +18,7 @@ try:
                 Data = create_account(Data)
                 layout()
                 print("Account Creation Successful! Please Login again!")
-                loading(3,"Returning to Home page",3)
+                lazy_loading(3,"Returning to Home page",3)
             export(Data)
         export(Data)
 except Exception as E:
